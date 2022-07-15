@@ -1,0 +1,1 @@
+print(ord("O") - ord("W"))

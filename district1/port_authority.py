@@ -9,12 +9,12 @@ PREV_FLAG = "CTF{capt41n-h00k!}"
 
 #   for the ship moving logic
 NEAR_THRESHOLD = 50 # distance between ship and obstacle/other ship to trigger steer
-TICK_THRESHOLD = 5 # number of ticks to wait before steering again
+TICK_THRESHOLD = 10 # number of ticks to wait before steering again
 
 #   enum of directions for steering
 DIRECTIONS = {"UP": {"next": "RIGHT"}, "RIGHT": {"next": "DOWN"}, "DOWN": {"next": "LEFT"}, "LEFT": {"next": "UP"}}
 
-URL = "wss://260d02c8bbbe6e0dcddef3c23d809ab1.challenge.hackazon.org/ws"
+URL = "wss://a8487caffbf7973ce5490295d699ebf2.challenge.hackazon.org/ws"
 
 def process_game_start(state):
     pass
@@ -32,6 +32,10 @@ def should_steer(dir, s_x1, s_y1, s_x2, s_y2, o_x1, o_y1, o_x2, o_y2, ship_id):
             or (dir == "UP" and overlap(s_x1, s_x2, o_x1, o_x2) and s_y1 > o_y2 and is_near(s_y1, o_y2, ship_id))
             or (dir == "LEFT" and overlap(s_y1, s_y2, o_y1, o_y2) and s_x1 > o_x2 and is_near(s_x1, o_x2, ship_id))
             or (dir == "RIGHT" and overlap(s_y1, s_y2, o_y1, o_y2) and s_x2 < o_x1 and is_near(s_x2, o_x1, ship_id)))
+
+def hit_border(dir, s_x1, s_y1, s_x2, s_y2, ship_id):
+    return ((dir == "UP" and is_near(s_y1, 51, ship_id)) or (dir == "LEFT" and is_near(s_x1, 0, ship_id))
+     or(dir == "DOWN" and is_near(s_y2, 1188, ship_id)) or (dir == "RIGHT" and is_near(s_x2, 1886, ship_id)))
 
 def get_points(obj):
     # top left
@@ -68,7 +72,9 @@ def level3(state):
                 steer_ship = True
                 break
         
-        # TODO Check if ship is near the edge
+        # Check if ship is near the edge
+        if hit_border(ship["direction"], s_x1, s_y1, s_x2, s_y2, ship["id"]):
+            steer_ship = True
 
         if steer_ship:
             print("Steering ship " + str(ship["id"]) + " " + ship["direction"])
@@ -86,6 +92,9 @@ def main(message):
         # store board state
         global BOARD
         BOARD = state["level"]["board"]
+
+        global PORT_CENTER
+        PORT_CENTER = (700 + 850) / 2
 
         # internally keep track of ship state
         global SHIPS
