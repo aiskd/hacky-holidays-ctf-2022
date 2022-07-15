@@ -1,21 +1,25 @@
-from http.client import SWITCHING_PROTOCOLS
-from matplotlib.axis import Tick
 import websocket
-import rel
-import json
+import rel  # to stop websocket using keyboard
+import json # to convert dictionaries to/from json
 
+# Constants
+#   for starting the correct level
 LEVEL = 3
 PREV_FLAG = "CTF{capt41n-h00k!}"
-NEAR_THRESHOLD = 50 # in pixels
+
+#   for the ship moving logic
+NEAR_THRESHOLD = 50 # distance between ship and obstacle/other ship to trigger steer
 TICK_THRESHOLD = 5 # number of ticks to wait before steering again
 
+#   enum of directions for steering
 DIRECTIONS = {"UP": {"next": "RIGHT"}, "RIGHT": {"next": "DOWN"}, "DOWN": {"next": "LEFT"}, "LEFT": {"next": "UP"}}
 
-URL = "wss://3acca90731734e08041fdd3367c215a0.challenge.hackazon.org/ws"
+URL = "wss://260d02c8bbbe6e0dcddef3c23d809ab1.challenge.hackazon.org/ws"
 
 def process_game_start(state):
     pass
 
+### HELPER FUNCTIONS ###
 def overlap(min1, max1, min2, max2):
     return max(0, min(max1, max2) - max(min1, min2))
 
@@ -36,12 +40,13 @@ def get_points(obj):
     s_x2, s_y2 = obj["area"][1]["x"], obj["area"][1]["y"]
     return s_x1, s_y1, s_x2, s_y2
 
+### LOGIC FOR LEVELS ###
 def level3(state):
-    # Check if any ships are within {NEAR_THRESHOLD}pixels of colliding something, if it is, then steer it
+    # Check if any ships are within {NEAR_THRESHOLD}pixels of colliding into something. If it is, then steer it
     for ship in state["ships"]:
-        if TICK - SHIPS[ship["id"]]["steer_tick"] < TICK_THRESHOLD:
+        # we've already changed the position during the previous tick so don't change it again or the ship will spin
+        if abs(TICK - SHIPS[ship["id"]]["steer_tick"]) < TICK_THRESHOLD:
             print("tick wait")
-            # we've already changed the position during the previous tick so don't change it again or the ship will spin
             continue
 
         s_x1, s_y1, s_x2, s_y2 = get_points(ship)
@@ -55,7 +60,7 @@ def level3(state):
             if should_steer(ship["direction"], s_x1, s_y1, s_x2, s_y2, o_x1, o_y1, o_x2, o_y2, ship["id"]):
                 steer_ship = True
                 break
-        
+
         # Check if near other ships
         for s2 in state["ships"]:
             s2_x1, s2_y1, s2_x2, s2_y2 = get_points(s2)
@@ -63,18 +68,18 @@ def level3(state):
                 steer_ship = True
                 break
         
-        # Check if ship is near the edge
+        # TODO Check if ship is near the edge
 
-        
         if steer_ship:
-            print("Steering ship " + str(ship["id"]) + ship["direction"])
+            print("Steering ship " + str(ship["id"]) + " " + ship["direction"])
             ws.send(json.dumps({"type": "SHIP_STEER", "shipId": ship["id"]}))
-            SHIPS[ship["id"]]["direction"] = DIRECTIONS[ship["direction"]]["next"]
+            # SHIPS[ship["id"]]["direction"] = DIRECTIONS[ship["direction"]]["next"]
             SHIPS[ship["id"]]["steer_tick"] = TICK
 
-
+### MAIN FUNCTION ###
 def main(message):
-    state = json.loads(message)
+    state = json.loads(message) # conver to python dict
+
     if state["type"] == "GAME_START":
         print("Board Set")
 
@@ -95,7 +100,7 @@ def main(message):
         level3(state)
         TICK += 1
 
-# Sockets
+### SOCKET FUNCTIONS ###
 def on_message(ws, message):
     main(message)
 
@@ -109,9 +114,9 @@ def on_close(ws, close_status_code, close_msg):
 
 def on_open(ws):
     print("### OPEN ###")
+    # start level when first connect to socket
     ws.send(json.dumps({"type": "START_GAME",
             "level": LEVEL, "password": PREV_FLAG}))
-
 
 if __name__ == "__main__":
     ws = websocket.WebSocketApp(URL,
