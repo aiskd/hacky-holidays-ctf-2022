@@ -271,56 +271,57 @@
         "type": "TICK",
         "ships": [
             {
+                "type": "SHIP_4",
+                "area": [
+                    {
+                        "x": 905,
+                        "y": 213
+                    },
+                    {
+                        "x": 1185,
+                        "y": 273
+                    }
+                ],
+                "direction": "LEFT",
+                "speed": 6,
+                "id": 0,
+                "isDocked": false
+            },
+            {
                 "type": "SHIP_5",
                 "area": [
                     {
-                        "x": 1364,
-                        "y": 51
+                        "x": 1324,
+                        "y": 260
                     },
                     {
-                        "x": 1424,
-                        "y": 321.63829787234044
+                        "x": 1384,
+                        "y": 530.6382978723404
                     }
                 ],
                 "direction": "UP",
-                "speed": 5,
-                "id": 0,
+                "speed": 6,
+                "id": 1,
                 "isDocked": false
             },
             {
                 "type": "SHIP_2",
                 "area": [
                     {
-                        "x": 475,
-                        "y": 811
+                        "x": 560,
+                        "y": 873
                     },
                     {
-                        "x": 713.8436830835118,
-                        "y": 871
+                        "x": 798.8436830835118,
+                        "y": 933
                     }
                 ],
                 "direction": "RIGHT",
-                "speed": 5,
-                "id": 1,
-                "isDocked": false
-            },
-            {
-                "type": "SHIP_4",
-                "area": [
-                    {
-                        "x": 724,
-                        "y": 281
-                    },
-                    {
-                        "x": 1004,
-                        "y": 341
-                    }
-                ],
-                "direction": "LEFT",
-                "speed": 6,
+                "speed": 4,
                 "id": 2,
                 "isDocked": false
             }
         ]
     }
     ```
+![](2022-07-15-15-21-19.png)
