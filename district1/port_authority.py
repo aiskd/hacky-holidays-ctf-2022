@@ -7,7 +7,7 @@ import json
 LEVEL = 3
 PREV_FLAG = "CTF{capt41n-h00k!}"
 NEAR_THRESHOLD = 50 # in pixels
-TICK_THRESHOLD = 3 # number of ticks to wait before steering again
+TICK_THRESHOLD = 5 # number of ticks to wait before steering again
 
 DIRECTIONS = {"UP": {"next": "RIGHT"}, "RIGHT": {"next": "DOWN"}, "DOWN": {"next": "LEFT"}, "LEFT": {"next": "UP"}}
 
@@ -29,25 +29,28 @@ def should_steer(dir, s_x1, s_y1, s_x2, s_y2, o_x1, o_y1, o_x2, o_y2, ship_id):
             or (dir == "LEFT" and overlap(s_y1, s_y2, o_y1, o_y2) and s_x1 > o_x2 and is_near(s_x1, o_x2, ship_id))
             or (dir == "RIGHT" and overlap(s_y1, s_y2, o_y1, o_y2) and s_x2 < o_x1 and is_near(s_x2, o_x1, ship_id)))
 
+def get_points(obj):
+    # top left
+    s_x1, s_y1 = obj["area"][0]["x"], obj["area"][0]["y"]
+    # bottom right
+    s_x2, s_y2 = obj["area"][1]["x"], obj["area"][1]["y"]
+    return s_x1, s_y1, s_x2, s_y2
+
 def level3(state):
     # Check if any ships are within {NEAR_THRESHOLD}pixels of colliding something, if it is, then steer it
     for ship in state["ships"]:
-        if TICK - SHIPS[ship["id"]]["steer_tick"] < TICK_THRESHOLD: #and SHIPS[ship["id"]]["direction"] != ship["direction"]
+        if TICK - SHIPS[ship["id"]]["steer_tick"] < TICK_THRESHOLD:
             print("tick wait")
             # we've already changed the position during the previous tick so don't change it again or the ship will spin
             continue
 
-        # top left
-        s_x1, s_y1 = ship["area"][0]["x"], ship["area"][0]["y"]
-        # bottom right
-        s_x2, s_y2 = ship["area"][1]["x"], ship["area"][1]["y"]
+        s_x1, s_y1, s_x2, s_y2 = get_points(ship)
 
         steer_ship = False # whether or not the ship needs to be steered
 
         # Check if near obstructions
         for ob in BOARD["obstructions"]:
-            o_x1, o_y1 = ob["area"][0]["x"], ob["area"][0]["y"]
-            o_x2, o_y2 = ob["area"][1]["x"], ob["area"][1]["y"]
+            o_x1, o_y1, o_x2, o_y2 = get_points(ob)
 
             if should_steer(ship["direction"], s_x1, s_y1, s_x2, s_y2, o_x1, o_y1, o_x2, o_y2, ship["id"]):
                 steer_ship = True
@@ -55,9 +58,8 @@ def level3(state):
         
         # Check if near other ships
         for s2 in state["ships"]:
-            o_x1, o_y1 = s2["area"][0]["x"], s2["area"][0]["y"]
-            o_x2, o_y2 = s2["area"][1]["x"], s2["area"][1]["y"]
-            if s2["id"] != ship["id"] and should_steer(ship["direction"], s_x1, s_y1, s_x2, s_y2, o_x1, o_y1, o_x2, o_y2, ship["id"]):
+            s2_x1, s2_y1, s2_x2, s2_y2 = get_points(s2)
+            if s2["id"] != ship["id"] and should_steer(ship["direction"], s_x1, s_y1, s_x2, s_y2, s2_x1, s2_y1, s2_x2, s2_y2, ship["id"]):
                 steer_ship = True
                 break
         
@@ -75,19 +77,23 @@ def main(message):
     state = json.loads(message)
     if state["type"] == "GAME_START":
         print("Board Set")
+
+        # store board state
         global BOARD
         BOARD = state["level"]["board"]
+
+        # internally keep track of ship state
         global SHIPS
         SHIPS = {}
         for i in range(len(state["level"]["ships"])):
             SHIPS[i] = {"direction": False, "steer_tick": 0}
+
+        # count the number of ticks
         global TICK
         TICK = 0
-        # NEXT_POS = [False for s in range(len(state["level"]["ships"]))]
     elif state["type"] == "TICK":
         level3(state)
-    
-    TICK += 1
+        TICK += 1
 
 # Sockets
 def on_message(ws, message):
