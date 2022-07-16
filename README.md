@@ -85,4 +85,44 @@
 
 ## DISTRICT 3 - COMMERCIAL AVENUE
 
+### [100pts] Crack the Password
+> Easy, Reversing, Linux
+- [ ] [100pts] Crack the Password
+
+### [100pts] Hacky Holidays Airlines
+> Easy, Web
+- [ ] [100pts] Hacky Holidays Airlines
+
+### [150pts] [Billboard Mahem](./district3/billboard_mahem.md)
+> Easy, Web
+- [x] [10pts] Fill the Upload Form (xy)
+- [x] [90pts] Billboard Control (dan wj)
+
+### [150pts] [Bring in the Cavalry](district3/bring_in_the_cavalry.md)
+> Easy, Stego, Forensics
+- [x] [25pts] Where it all Started (xy)
+- [x] [25pts] Trying to be Resilient (dan wj)
+- [x] [50pts] High Price Tag (dan wj)
+- [ ] [50pts] The Apocalypse
+
+### [150pts] Pizza Pazzi
+- [ ] [75pts] Pizza Pazzi-1
+- [ ] [25pts] Pizza Pazzi-2
+- [ ] [25pts] Pizza Pazzi-3
+- [ ] [25pts] Pizza Pazzi-4
+
+### [200pts] Recover Pet Data
+- [ ] [200pts] Gain Access to the `/admin` API endpoint
+
+### [225pts] Stop the Heist
+- [ ] [75pts] Locate the Payload
+- [ ] [75pts] Stolen Files
+- [ ] [75pts] Password Cracking
+
+### [300pts] [Cloud Escalator Part 1](district3/cloud.md)
+- [x] [25pts] It's there but not Really (dan wj)
+- [ ] [50pts] THrow Everything in There
+- [ ] [75pts] Follor Through
+- [ ] [150pts] Security Check
+
 ## DISTRICT 4 - DOWNTOWN
