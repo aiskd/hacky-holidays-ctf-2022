@@ -133,10 +133,29 @@ Non-debugging symbols:
 
 -   When you run the program, it asks for a password as input.
 -   I first used `gdb` and created breakpoints to try to skip to where the flag would be outputted but that didn't work
--   Then I used [Ghidra]() to analyse the program's source code (Ghidra disassembles the programs and also lets you view them in C, which is much more human readable than assembly) and realised that the flag isn't being printed out, the flag is the input itself.
+-   Then I used [Ghidra]() to analyse the program's source code (Ghidra disassembles the programs and also lets you view them in C/C++, which is much more human readable than assembly) and realised that the flag isn't being printed out, the flag is the input itself.
 
 ```c
+undefined8 main(void)
 
+{
+  int iVar1;
+  char local_38 [48];
+  
+  printf("Please enter the password: ");
+  fgets(local_38,0x22,stdin);
+  iVar1 = validatePassword(local_38);
+  if (iVar1 == 0) {
+    puts("Access denied!");
+  }
+  else {
+    puts("Access granted!");
+  }
+  return 0;
+}
+```
+
+```c
 undefined8 validatePassword(byte *param_1)
 
 {
@@ -144,7 +163,7 @@ undefined8 validatePassword(byte *param_1)
   undefined8 uVar2;
 
   sVar1 = strlen((char *)param_1);
-  if ((((((sVar1 == 0x21)  // password contains 33 characters
+  if ((((((sVar1 == 0x21)
       && (*param_1 == (byte)(param_1[6] * '\x02' - 0x1d))) &&
         (param_1[1] == (byte)(param_1[0x13] + 5))) &&
        (((param_1[2] == (byte)(((char)param_1[8] >> 1) + 0x13U) &&
@@ -180,5 +199,15 @@ undefined8 validatePassword(byte *param_1)
   return uVar2;
 }
 ```
-* 
-![](2022-07-17-10-14-01.png)
+* from the `validateProgram` function, we were created [a script](crack_the_password.c) to reverse engineer the password
+  * we copied the if statement over and replaced the equality checks (`==`) to assignments (`=`) and removed the `&&`s
+  * we also removed excessive brackets for readability and replaced `byte` with `char` because the `byte` type does not exist in C
+  * then we rearranged the statements so that statements that were dependent on other 'parent statements' were below those parent statements
+    * example:
+      * `*param_1 = (byte)(param_1[6] * '\x02' - 0x1d)` is assigning `param_1[6] * '\x02' - 0x1d` to `*param_1`(aka. `param_1[0]`)
+      * so it needs `param_1[6]` before it's able to do that assignment
+      * as such, we will place `param_1[6] = (char)param_1[0x16] >> 1` above it
+      * then we see that `param_1[6]` needs `param_1[0x16]
+      * so we place `param_1[0x16`'s assignment above that
+      * and so on...
+* and when we print out `param_1` we get the flag: `CTF{7a0QfB8dD1cF293Oy5a9fk9dA01c}`

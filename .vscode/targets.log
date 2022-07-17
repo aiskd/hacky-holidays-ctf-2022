@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sun Jul 17 14:54:56 2022
+# Make data base, printed on Sun Jul 17 17:15:55 2022
 
 # Variables
 
@@ -54,8 +54,6 @@ VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 VSCODE_CODE_CACHE_PATH = C:\Users\chuah\AppData\Roaming\Code\CachedData\b06ae3b2d2dbfe28bca3134cc6be65935cdfea6a
 # environment
 LANG = C
-# environment
-LATEXWORKSHOP_DOCKER_LATEX = 
 # default
 .LOADED := 
 # environment
@@ -195,7 +193,7 @@ PROCESSOR_REVISION = 9e0a
 # environment
 PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 158 Stepping 10, GenuineIntel
 # variable set hash-table stats:
-# Load=91/1024=9%, Rehash=0, Collisions=8/115=7%
+# Load=90/1024=9%, Rehash=0, Collisions=8/114=7%
 
 # Pattern-specific Variable Values
 
@@ -203,7 +201,7 @@ PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 158 Stepping 10, GenuineIntel
 
 # Directories
 
-# . (key c:/Users/chuah/Documents/LIFEFILE/1-CODE/HackyHolidays2022/hacky-holidays-ctf-2022, mtime 1658040892): 10 files, no impossibilities.
+# . (key c:/Users/chuah/Documents/LIFEFILE/1-CODE/HackyHolidays2022/hacky-holidays-ctf-2022, mtime 1658047678): 10 files, no impossibilities.
 
 # 10 files, no impossibilities in 1 directories.
 
@@ -268,6 +266,6 @@ GNUmakefile:
 # strcache performance: lookups = 20 / hit rate = 15%
 # hash-table stats:
 # Load=17/8192=0%, Rehash=0, Collisions=0/20=0%
-# Finished Make data base on Sun Jul 17 14:54:56 2022
+# Finished Make data base on Sun Jul 17 17:15:55 2022
 
  
