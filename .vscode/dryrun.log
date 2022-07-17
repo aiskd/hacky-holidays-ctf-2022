@@ -1,0 +1,6 @@
+make.exe --dry-run --always-make --keep-going --print-directory
+make: Entering directory 'c:/Users/chuah/Documents/LIFEFILE/1-CODE/HackyHolidays2022/hacky-holidays-ctf-2022'
+make: Leaving directory 'c:/Users/chuah/Documents/LIFEFILE/1-CODE/HackyHolidays2022/hacky-holidays-ctf-2022'
+ 
+make: *** No targets specified and no makefile found.  Stop.
+

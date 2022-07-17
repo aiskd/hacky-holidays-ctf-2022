@@ -61,10 +61,10 @@
 
 ### [200pts] Quantum State
 > Medium
-* [ ] [25pts] Qubits and Logic Gates?
-* [ ] [25pts] Quantum Circuits
-* [ ] [75pts] Two-Qubit States
-* [ ] [75pts] Bell State
+* [x] [25pts] Qubits and Logic Gates? (vic)
+* [x] [25pts] Quantum Circuits (vic)
+* [x] [75pts] Two-Qubit States (vic)
+* [x] [75pts] Bell State (vic)
 
 ### [250pts] Location Analysis
 > Medium
