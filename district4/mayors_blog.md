@@ -32,5 +32,21 @@
 * `CTF{np3QKOEmYBJNcDaFuo3dcZQ8D1Pbeh4G}`
 
 ## Gain Access to the Developer Console
+Looking through the access logs, we can see that someone has accessed endpoint `/console` before:
+![](Screen%20Shot%202022-07-24%20at%202.48.32%20pm.png)
+
+However, going to the `/console` endpoint gives a `404 Not Found` response. I tried looking at some common endpoints that might provide clues and at `robots.txt` gives us this response:
+```
+User-Agent: *
+Disallow: /admin_shell
+```
+
+Trying the `/admin_shell` endpoint brings us to a page that tells us only system admins have access to that page. So onto finding information about system admins.
+
+Going back to the logs, one of the requests catches my eye:
+
+![](Screen%20Shot%202022-07-24%20at%202.54.48%20pm.png)
+
+Well that's the system admin login. After logging in using this credentials, going back to `/admin_shell` shows our next flag and a console for us to interact with.
 
 ## Crack the Password of the Admin Account on the Server
