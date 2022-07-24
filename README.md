@@ -128,5 +128,8 @@
 ## DISTRICT 4 - DOWNTOWN
 
 ### [] Mayor's Blog
-- [x] [10pts]
-- [x] [20pts]
+- [x] [10pts] Find Hidden Flag (xy)
+- [x] [20pts] Get Access to an Editor Account (xy)
+- [ ] [30pts] Escalate to Administrative Privileges (dan wj)
+- [ ] [30pts] Gain Access to the Developer Console (dan wj)
+- [ ] [35pts] Crack the password of the admin account on the Server

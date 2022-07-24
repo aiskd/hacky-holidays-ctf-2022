@@ -23,6 +23,13 @@
 * temporary password: `REFIeZnN8lrU6pLA`
 
 ## Escalate to Administrative Priviledges
+* Check the cookies and change `isAdmin` to `True` then reload
+* ![](./2022-07-24-11-00-38.png)
+* this results in a new button on the page: `Check nginx logs`
+* ![](./2022-07-24-11-01-34.png)
+* which, upon clicking it, gives us the flag
+  * ![](./2022-07-24-11-02-42.png)
+* `CTF{np3QKOEmYBJNcDaFuo3dcZQ8D1Pbeh4G}`
 
 ## Gain Access to the Developer Console
 
