@@ -10,7 +10,7 @@
 * [x] [10pts] Find the Attack Point (rel)
 * [ ] [40pts] Record Everything
 * [ ] [30pts] Know the Limit
-* [ ] [20pts] Trie or False
+* [ ] [20pts] True or False
 
 ### [100pts] [You Can't See Me](./district1/you_cant_see_me.md)
 > Easy
@@ -85,9 +85,9 @@
 
 ## DISTRICT 3 - COMMERCIAL AVENUE
 
-### [100pts] Crack the Password
+### [100pts] [Crack the Password](district3/crack_the_password.md)
 > Easy, Reversing, Linux
-- [ ] [100pts] Crack the Password
+- [x] [100pts] Crack the Password (xy, rel)
 
 ### [100pts] Hacky Holidays Airlines
 > Easy, Web
@@ -126,3 +126,7 @@
 - [ ] [150pts] Security Check
 
 ## DISTRICT 4 - DOWNTOWN
+
+### [] Mayor's Blog
+- [x] [10pts]
+- [x] [20pts]
