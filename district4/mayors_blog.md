@@ -47,6 +47,8 @@ Going back to the logs, one of the requests catches my eye:
 
 ![](Screen%20Shot%202022-07-24%20at%202.54.48%20pm.png)
 
-Well that's the system admin login. After logging in using this credentials, going back to `/admin_shell` shows our next flag and a console for us to interact with.
+Well that's the system admin login. After logging in using this credentials, going back to `/admin_shell` shows a console for us to interact with.
+
+Using the `ls` command shows all the files and directories available, and the command `cat user.txt` gives us our next flag.
 
 ## Crack the Password of the Admin Account on the Server
